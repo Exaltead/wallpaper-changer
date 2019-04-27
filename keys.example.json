@@ -1,5 +1,13 @@
 {
     "client_id": "CHANGEME",
     "client_secret": "CHANGEME",
-    "user_agent": "CHANGEME"
+    "user_agent": "CHANGEME",
+    "resolution": [
+        1920,
+        1080
+    ],
+    "subreddits": [
+        "wallpapers",
+        "wallpaper"
+    ]
 }
