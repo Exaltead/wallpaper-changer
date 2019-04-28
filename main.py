@@ -1,6 +1,7 @@
 import json
 import praw
 import selection
+import changer
 
 
 def _load_secret_config(filename: str):
@@ -14,7 +15,7 @@ def main():
                          client_secret=config['client_secret'],
                          user_agent=config['user_agent'])
     submission = selection.select_submission(config, reddit)
-    print(submission.title)
+    changer.set_desktop_background(submission, "pics")
 
 
 if __name__ == "__main__":
