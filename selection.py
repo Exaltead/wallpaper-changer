@@ -5,16 +5,24 @@ def select_submission(config, reddit):
     resolution = config['resolution']
 
     selected_submission = None
+    bests = []
+
     for subreddit in config['subreddits']:
         valid_submissions = _load_wallpaper_submissions(
             reddit, subreddit, resolution)
+
         if len(valid_submissions) == 0:
             continue
+
         for submission in valid_submissions:
             if _validate_url(submission):
-                return submission
+                bests.append(submission)
+                break
 
-    return None
+    if len(bests) == 0:
+        return None
+    best = max(bests, key=lambda x: x.score)
+    return best
 
 
 def _validate_url(submission):
