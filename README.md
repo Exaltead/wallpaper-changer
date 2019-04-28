@@ -31,4 +31,4 @@ Idiot-proof guide fro running things hourly.
 1) Set CHANGEME in run.example.sh to root of this project as absolute path
 2) `cp run.example.sh run-wallpaper-fetch.sh`
 3) `chmod +x run-wallpaper-fetch.sh`
-4) `sudo cp run-wallpaper-fetch.sh /etc/cron.hourly`
+4) Add to crom by using cron `crontab -e` and then adding line `0 * * * *  ABSOLUTE_PATH_TO_PROJECT/run-wallpaper-fetch.sh`
