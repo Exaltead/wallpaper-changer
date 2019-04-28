@@ -1,4 +1,5 @@
 import re
+import datetime as dt
 
 
 def select_submission(config, reddit):
@@ -22,6 +23,7 @@ def select_submission(config, reddit):
     if len(bests) == 0:
         return None
     best = max(bests, key=lambda x: x.score)
+    _log_selection(best, config['log_file'])
     return best
 
 
@@ -41,3 +43,9 @@ def _load_wallpaper_submissions(reddit, subreddit_name: str, resolution: (int, i
 def _is_good_resolution(title: str, resolution: (int, int)):
     return re.search(
         f"{resolution[0]}(px)?\\s?.\\s?{resolution[1]}(px)?", title) is not None
+
+
+def _log_selection(submission, file):
+    line = f"{dt.datetime.now():%d.%m.%Y %H:%M:%S} '{submission.title}' {submission.subreddit.display_name} {submission.score}\n"
+    with open(file, mode='a') as f:
+        f.write(line)

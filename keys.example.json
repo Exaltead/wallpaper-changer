@@ -9,5 +9,6 @@
     "subreddits": [
         "wallpapers",
         "wallpaper"
-    ]
+    ],
+    "log_file": "pictures.log"
 }
