@@ -26,16 +26,11 @@ def select_submission(config, reddit):
 
 
 def _validate_url(submission):
-    # Match only direct reddit or imgur images for now, that way it is bit safer
-    # since it should avoid downloading completely random stuff from the internet.
     matches_reddit = re.match(
         r'https://i\.redd\.it/[\d\w]*\.jpg', submission.url)
     matches_imgur = re.match(
         r'https://i\.imgur\.com/[\d\w]*\.jpg', submission.url)
-    if matches_reddit or matches_imgur:
-        return True
-    print(f"Invalid url {submission.url}")
-    return False
+    return matches_reddit or matches_imgur
 
 
 def _load_wallpaper_submissions(reddit, subreddit_name: str, resolution: (int, int)):
@@ -44,10 +39,5 @@ def _load_wallpaper_submissions(reddit, subreddit_name: str, resolution: (int, i
 
 
 def _is_good_resolution(title: str, resolution: (int, int)):
-    matching = re.search(
+    return re.search(
         f"{resolution[0]}(px)?\\s?.\\s?{resolution[1]}(px)?", title) is not None
-    if not matching:
-        print(f"Discarding \"{title}\" not matching resolution")
-    else:
-        print(f"Found \"{title}\" with matching resolution")
-    return matching
