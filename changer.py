@@ -1,4 +1,5 @@
 import os
+import subprocess
 import re
 import requests
 import shutil
@@ -7,10 +8,8 @@ import datetime as dt
 
 def set_desktop_background(submission, folder):
     filename = _make_filename(folder, submission.title)
-    if _check_file(filename, folder):
-        return
-
-    _load(submission.url, filename)
+    if not _check_file(filename, folder):
+        _load(submission.url, filename)
     _set_background(filename)
     _clear_resources(folder)
 
@@ -38,14 +37,14 @@ def _load(url: str, filename: str):
 
 
 def _set_background(filename):
-    os.system(
-        "gsettings set org.gnome.desktop.background picture-options 'centered'")
-    os.system(
-        f"gsettings set org.gnome.desktop.background picture-uri \"file:///{filename}\"")
+    subprocess.run(["gsettings", "set", "org.cinnamon.desktop.background",
+                    "picture-uri", f'"file:///{filename}"'])
+    subprocess.run(
+        ["gsettings", "set", "org.cinnamon.desktop.background", "picture-options", 'centered'])
 
 
 def _clear_resources(folder):
-    age_threshold = dt.datetime.now() - dt.timedelta(minutes=30)
+    age_threshold = dt.datetime.now() - dt.timedelta(days=2)
     for f in os.listdir(folder):
         filename = f"{folder}/{f}"
         time = dt.datetime.fromtimestamp(os.path.getmtime(filename))
